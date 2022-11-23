@@ -21,3 +21,6 @@ class Komplex():
 
     def norm(self):
         return self.real*self.real+self.imag*self.imag
+
+    def copy(self):
+        return Komplex(self.real, self.imag)
