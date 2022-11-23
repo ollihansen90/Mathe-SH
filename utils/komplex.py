@@ -18,3 +18,6 @@ class Komplex():
         r = (self.real*zahl.real+self.imag*zahl.imag)/(zahl.real**2+zahl.imag**2)
         i = (self.imag*zahl.real-self.real*zahl.imag)/(zahl.real**2+zahl.imag**2)
         return Komplex(r, i)
+
+    def norm(self):
+        return self.real*self.real+self.imag*self.imag
