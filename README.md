@@ -1,2 +1,2 @@
 # Mathe-SH
-Codebeispiele für Mathe^SH-Vorträge
+Colab-Notebooks für den Python-Kurs von Mathe^SH.
