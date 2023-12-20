@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import numpy as np
+from skimage import io
 
 class CNN(nn.Module):
     def __init__(self):
