@@ -608,3 +608,62 @@ def berechne_wert(schachbrett):
     wertung += 0.5*(zuege_w-zuege_s)
 
     return wertung
+
+def berechne_wert(schachbrett):
+    # https://chessify.me/blog/chess-engine-evaluation
+    # 1. Zähle Figuren mit Wertungen
+    # 2. Positionswertungen
+    # 2.1 Bedrohte Figuren
+    # 2.2 König steht rochiert,...
+    # Freibauer
+    # Backward Pawn
+    # Passed Pawn
+    wertung = 0
+
+    summe_w = 0
+    summe_s = 0
+    doppelt_w = 0
+    doppelt_s = 0
+    w_liste = [0]
+    s_liste = [0]
+    for spalte in range(8):
+        w = 0
+        s = 0
+        for zeile in range(8):
+            # Wertigkeit
+            if schachbrett.feld[zeile][spalte]>0:
+                summe_w += wertigkeit[abs(schachbrett.feld[zeile][spalte])]
+            if schachbrett.feld[zeile][spalte]<0:
+                summe_s += wertigkeit[abs(schachbrett.feld[zeile][spalte])]
+
+            # Anzahl gedoppelter Bauern und isolierter Bauern
+            if schachbrett.feld[zeile][spalte]==1:
+                w += 1
+            if schachbrett.feld[zeile][spalte]==-1:
+                s += 1
+
+        if w>0:
+            doppelt_w += w-1
+        if s>0:
+            doppelt_s += s-1
+        w_liste.append(w)
+        s_liste.append(s)
+    w_liste.append(0)
+    s_liste.append(0)
+    w = 0
+    s = 0
+    for i in range(1, len(w_liste)-1):
+        if w_liste[i-1]==0 and w_liste[i+1]==0:
+            w += w_liste[i]
+        if s_liste[i-1]==0 and s_liste[i+1]==0:
+            s += s_liste[i]
+    wertung = summe_w-summe_s - 0.1*(doppelt_w-doppelt_s) + 0.1*(s-w)
+
+    # Anzahl möglicher Züge, "Mobilität"
+    zuege_w = len(get_alle_bewegungen(schachbrett))
+    schachbrett.invertiere()
+    zuege_s = len(get_alle_bewegungen(schachbrett))
+    schachbrett.invertiere()
+    wertung += 0.5*(zuege_w-zuege_s)
+
+    return wertung
