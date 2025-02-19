@@ -156,7 +156,7 @@ def links(pos):
         return False
     zeile = pos[1]
     spalte = pos[0]
-    spalte_neu = ord(spalte)-1
+    spalte_neu = ord(spalte.upper())-1
     if spalte_neu>=65:
         return chr(spalte_neu)+zeile
     else:
