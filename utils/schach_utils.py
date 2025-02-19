@@ -343,7 +343,7 @@ def get_bewegung_bauer(schachbrett, pos):
     figur = schachbrett[pos]
     # Springe 1 nach vorne
     pos_neu = vor(pos)
-    if schachbrett[pos_neu]==leer and pos_neu:
+    if pos_neu and schachbrett[pos_neu]==leer:
         output.append(pos_neu)
     # Springe 2 nach vorne, falls du dich noch nicht bewegt hast
     pos_neu = vor(vor(pos))
