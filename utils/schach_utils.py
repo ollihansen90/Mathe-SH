@@ -236,10 +236,12 @@ def bewege_bauer(schachbrett, pos, pos_neu=None):
     if pos_neu is None:
         pos_neu = get_bewegung_bauer(schachbrett, pos)
         pos_neu = pos_neu[randint(0,len(pos_neu)-1)]
-    if pos_neu[-1]==8:
+
+    if pos_neu[-1]=="8":
         schachbrett[pos_neu] = dame
-    else:
-        schachbrett[pos_neu] = bauer
+    elif "8=" in pos_neu:
+        print(pos_neu)
+        schachbrett[pos_neu] = {"r": turm, "q": dame, "b": laeufer, "n": springer}[pos_neu.split("=")[1][0].lower()]
 
 def bewege_springer(schachbrett, pos, pos_neu=None):
     """
@@ -343,8 +345,10 @@ def get_bewegung_bauer(schachbrett, pos):
     figur = schachbrett[pos]
     # Springe 1 nach vorne
     pos_neu = vor(pos)
-    if pos_neu and schachbrett[pos_neu]==leer:
+    if schachbrett[pos_neu]==leer and pos_neu:
         output.append(pos_neu)
+        if pos_neu[1]=="8":
+            output.extend([pos_neu+"=R", pos_neu+"=N", pos_neu+"=B", pos_neu+"=Q"])
     # Springe 2 nach vorne, falls du dich noch nicht bewegt hast
     pos_neu = vor(vor(pos))
     if pos[1]=="2" and len(output)==1 and schachbrett[pos_neu]==leer:
@@ -354,9 +358,14 @@ def get_bewegung_bauer(schachbrett, pos):
     pos_neu = rechts(vor(pos))
     if pos_neu and figur*schachbrett[pos_neu]<0:
         output.append(pos_neu)
+        if pos_neu[1]=="8":
+            output.extend([pos_neu+"=R", pos_neu+"=N", pos_neu+"=B", pos_neu+"=Q"])
     pos_neu = links(vor(pos))
     if pos_neu and figur*schachbrett[pos_neu]<0:
         output.append(pos_neu)
+        if pos_neu[1]=="8":
+            output.extend([pos_neu+"=R", pos_neu+"=N", pos_neu+"=B", pos_neu+"=Q"])
+
     # TODO: En Passant
     return output
 
