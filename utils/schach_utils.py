@@ -242,6 +242,8 @@ def bewege_bauer(schachbrett, pos, pos_neu=None):
     elif "8=" in pos_neu:
         print(pos_neu)
         schachbrett[pos_neu] = {"r": turm, "q": dame, "b": laeufer, "n": springer}[pos_neu.split("=")[1][0].lower()]
+    else:
+        schachbrett[pos_neu] = bauer
 
 def bewege_springer(schachbrett, pos, pos_neu=None):
     """
